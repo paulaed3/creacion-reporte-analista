@@ -1,0 +1,29 @@
+{
+  "ID": {
+    "source": "LETTER:A"
+  },
+  "VARIABLE 1": {
+    "source": "LETTER:CM"
+  },
+  "VARIABLE 2": {
+    "source": "LETTER:CL"
+  },
+  "VARIABLE 3": {
+    "source": "LETTER:GS"
+  },
+  "Tipo NPS": {
+    "source": "LETTER:GV"
+  },
+  "Generación": {
+    "source": "LETTER:GU"
+  },
+  "ANTIGÜEDAD": {
+    "source": "LETTER:CI"
+  },
+  "TIPO CONTRATO": {
+    "source": "LETTER:CJ"
+  },
+  "COMENTARIOS": {
+    "source": "LETTER:H"
+  }
+}

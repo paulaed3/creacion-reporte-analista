@@ -1,0 +1,61 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run consolidado generator",
+			"type": "shell",
+			"command": "python \"c:\\Users\\anali\\OneDrive\\Documentos\\Proyectos\\Clima WT\\Generador documento de analisis\\generar_consolidado.py\" --universo 0",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado generator (quoted path)",
+			"type": "shell",
+			"command": "python \"c:\\Users\\anali\\OneDrive\\Documentos\\Proyectos\\Clima WT\\Generador documento de analisis\\generar_consolidado.py\" --sheet \"Datos A2\" --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado (verify Q9 IL)",
+			"type": "shell",
+			"command": "powershell -NoLogo -NoProfile -Command py -3 \"c:\\Users\\anali\\OneDrive\\Documentos\\Proyectos\\Clima WT\\Generador documento de analisis\\generar_consolidado.py\" --sheet \"Datos A2\" --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado with full python path",
+			"type": "shell",
+			"command": "\"C:\\Users\\anali\\AppData\\Local\\Programs\\Python\\Python313\\python.exe\" \"c:\\Users\\anali\\OneDrive\\Documentos\\Proyectos\\Clima WT\\Generador documento de analisis\\generar_consolidado.py\" --sheet \"Datos A2\" --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado (PowerShell quoted)",
+			"type": "shell",
+			"command": "powershell -NoLogo -NoProfile -Command \"& 'C:\\Users\\anali\\AppData\\Local\\Programs\\Python\\Python313\\python.exe' 'c:\\Users\\anali\\OneDrive\\Documentos\\Proyectos\\Clima WT\\Generador documento de analisis\\generar_consolidado.py' --sheet 'Datos A2' --universo 963\"",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado from workspace dir",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --sheet \"Datos A2\" --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado (default sheet)",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
