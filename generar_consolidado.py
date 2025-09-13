@@ -44,8 +44,7 @@ CONSOLIDADO_COLS = [
     'Se realizan actividades de bienestar que brindan espacios de esparcimiento para el empleado y su familia.',
     'Las características de mi trabajo me permiten tener un adecuado balance entre mi trabajo y mi vida personal.',
     'La empresa demuestra sensibilidad con las particularidades de la vida personal de sus empleados.',
-    '8. Por favor elija una opción de respuesta a cada afirmación. Seleccione la que mejor describa su situación.',
-    '9. Por favor elija una opción de respuesta a cada afirmación. Seleccione la que mejor describa su situación.',
+    '¿Cómo lo soporta para lograr los resultados de su cargo?',
     'Cuento con los recursos mínimos que requiero para realizar de forma adecuada mi trabajo.',
     'Puedo acceder a toda la información que necesito para hacer bien mi trabajo.',
     'Siento que mi cargo me brinda la oportunidad de progresar y desarrollarme.',
@@ -53,7 +52,34 @@ CONSOLIDADO_COLS = [
     'La formación que brinda la Organización realmente me ayuda a realizar mejor mi trabajo.',
     'El entrenamiento que recibo en mi cargo me ayuda progresar a nivel personal y profesional.',
     'Me evalúan por mi desempeño y tengo opciones de recibir reconocimiento si he realizado un esfuerzo por hacer mi trabajo de manera sobresaliente.',
-    'En esta Organización celebramos los éxitos y nos felicitamos por los logros obtenidos.'
+    'En esta Organización celebramos los éxitos y nos felicitamos por los logros obtenidos.',
+    '¿Cómo es la dinámica del trabajo conjunto para lograr resultados?',
+    'La comunicación entre áreas fluye de manera adecuada.',
+    'Mi jefe se comunica de forma clara y verifica que yo haya comprendido lo que me dice.',
+    'Conozco personas de diferentes áreas a la mía y se puede trabajar en un entorno agradable, de camaradería y cooperación.',
+    'En mi área se facilita y promueve el trabajo en equipo, la integración y la colaboración entre compañeros.',
+    'En la Organización las decisiones se toman de forma oportuna y no se aplazan decisiones importantes.',
+    'Las decisiones que se toman en la organización se hacen con base en análisis completos y sistemáticos.',
+    'Los líderes en la organización inspiran, motivan a los equipos y dan ejemplo con su comportamiento.',
+    'Los jefes forman a sus colaboradores y les dan una adecuada y oportuna retroalimentación sobre su desempeño.',
+    '¿Cómo es la cultura?',
+    'Los jefes y directivos son cordiales y respetuosos en el trato con personas de todos los niveles en la Organización.',
+    'Puedo dar mi punto de vista y sugerencias a la organización sabiendo que de ser posible se van a tener en cuenta.',
+    'Siento que las relaciones en esta Organización se establecen sobre la base de la confianza en las personas.',
+    'Puedo determinar formas propias de hacer mis labores mientras cumpla con las políticas de la Organización.',
+    'En esta Organización el trato es justo y equitativo, sin discriminiaciones por género, edad, raza u orientación sexual.',
+    'En esta Organización se evita que se utilice la intimidación y el hostigamiento para inducir la renuncia de algún empleado.',
+    'Yo quiero a la Organización y me siento comprometido con mi trabajo.',
+    'Me gusta mi trabajo y siento que estoy haciendo algo de valor para la Organización.',
+    '¿Cómo genera un ambiente sano, limpio y seguro?',
+    'Puedo desempeñar mi trabajo de forma segura y cómoda en cuanto a temperatura, sonido, espacio e iluminación.',
+    'Puedo manejar el estrés que se genera en mi trabajo para evitar que se afecte mi salud.',
+    'Los procesos de la organización cuentan con controles efectivos de calidad.',
+    'Se revisa de forma constante la calidad de los procesos y servicios en busca de un mejoramiento continuo.',
+    'Se nota una sensibilidad en la Organización por cuidar el impacto que su operación pueda generar en el medio ambiente.',
+    'La Organización implementa políticas y/o procedimientos para que los empleados cuidemos el medio ambiente.',
+    'La Organización contrata empleados y proveedores cumpliendo con todas los requisitos legales y pagando oportunamente.',
+    'La Organización cuida el impacto que puede tener en la comunidad en donde opera y busca aportar a la misma.'
 ]
 
 
@@ -585,6 +611,37 @@ def generar():
     q_az = avg_from_letter_scale4_to10(df, df_raw, 'AZ', id_mask)
     q_ba = avg_from_letter_scale4_to10(df, df_raw, 'BA', id_mask)
     q_bb = avg_from_letter_scale4_to10(df, df_raw, 'BB', id_mask)
+    # 29-36) Preguntas BD..BK con conversión 4->10
+    q_bd = avg_from_letter_scale4_to10(df, df_raw, 'BD', id_mask)
+    q_be = avg_from_letter_scale4_to10(df, df_raw, 'BE', id_mask)
+    q_bf = avg_from_letter_scale4_to10(df, df_raw, 'BF', id_mask)
+    q_bg = avg_from_letter_scale4_to10(df, df_raw, 'BG', id_mask)
+    q_bh = avg_from_letter_scale4_to10(df, df_raw, 'BH', id_mask)
+    q_bi = avg_from_letter_scale4_to10(df, df_raw, 'BI', id_mask)
+    q_bj = avg_from_letter_scale4_to10(df, df_raw, 'BJ', id_mask)
+    q_bk = avg_from_letter_scale4_to10(df, df_raw, 'BK', id_mask)
+    # 37) ¿Cómo es la cultura? (columna IQ) con conversión 4->10
+    q_iq = avg_from_letter_scale4_to10(df, df_raw, 'IQ', id_mask)
+    # 38-45) Preguntas BM..BT con conversión 4->10
+    q_bm = avg_from_letter_scale4_to10(df, df_raw, 'BM', id_mask)
+    q_bn = avg_from_letter_scale4_to10(df, df_raw, 'BN', id_mask)
+    q_bo = avg_from_letter_scale4_to10(df, df_raw, 'BO', id_mask)
+    q_bp = avg_from_letter_scale4_to10(df, df_raw, 'BP', id_mask)
+    q_bq = avg_from_letter_scale4_to10(df, df_raw, 'BQ', id_mask)
+    q_br = avg_from_letter_scale4_to10(df, df_raw, 'BR', id_mask)
+    q_bs = avg_from_letter_scale4_to10(df, df_raw, 'BS', id_mask)
+    q_bt = avg_from_letter_scale4_to10(df, df_raw, 'BT', id_mask)
+    # 46) ¿Cómo genera un ambiente sano, limpio y seguro? (columna IV) con conversión 4->10
+    q_iv = avg_from_letter_scale4_to10(df, df_raw, 'IV', id_mask)
+    # 47-54) Preguntas BV..CC con conversión 4->10
+    q_bv = avg_from_letter_scale4_to10(df, df_raw, 'BV', id_mask)
+    q_bw = avg_from_letter_scale4_to10(df, df_raw, 'BW', id_mask)
+    q_bx = avg_from_letter_scale4_to10(df, df_raw, 'BX', id_mask)
+    q_by = avg_from_letter_scale4_to10(df, df_raw, 'BY', id_mask)
+    q_bz = avg_from_letter_scale4_to10(df, df_raw, 'BZ', id_mask)
+    q_ca = avg_from_letter_scale4_to10(df, df_raw, 'CA', id_mask)
+    q_cb = avg_from_letter_scale4_to10(df, df_raw, 'CB', id_mask)
+    q_cc = avg_from_letter_scale4_to10(df, df_raw, 'CC', id_mask)
 
     # 6) Satisfacción por generación (promedio de satisf-col por cohorte)
     sat_centenialls = avg_by_cohort(df, df_raw, args.satisf_col, args.gen_col, 'centenialls', id_mask)
@@ -626,8 +683,7 @@ def generar():
         'Se realizan actividades de bienestar que brindan espacios de esparcimiento para el empleado y su familia.': q_aq,
     'Las características de mi trabajo me permiten tener un adecuado balance entre mi trabajo y mi vida personal.': q_ar,
         'La empresa demuestra sensibilidad con las particularidades de la vida personal de sus empleados.': q_as,
-        '8. Por favor elija una opción de respuesta a cada afirmación. Seleccione la que mejor describa su situación.': q_ig,
-    '9. Por favor elija una opción de respuesta a cada afirmación. Seleccione la que mejor describa su situación.': q_il,
+        '¿Cómo lo soporta para lograr los resultados de su cargo?': q_ig,
         'Cuento con los recursos mínimos que requiero para realizar de forma adecuada mi trabajo.': q_au,
         'Puedo acceder a toda la información que necesito para hacer bien mi trabajo.': q_av,
         'Siento que mi cargo me brinda la oportunidad de progresar y desarrollarme.': q_aw,
@@ -635,7 +691,34 @@ def generar():
         'La formación que brinda la Organización realmente me ayuda a realizar mejor mi trabajo.': q_ay,
         'El entrenamiento que recibo en mi cargo me ayuda progresar a nivel personal y profesional.': q_az,
         'Me evalúan por mi desempeño y tengo opciones de recibir reconocimiento si he realizado un esfuerzo por hacer mi trabajo de manera sobresaliente.': q_ba,
-        'En esta Organización celebramos los éxitos y nos felicitamos por los logros obtenidos.': q_bb,
+    'En esta Organización celebramos los éxitos y nos felicitamos por los logros obtenidos.': q_bb,
+    '¿Cómo es la dinámica del trabajo conjunto para lograr resultados?': q_il,
+    'La comunicación entre áreas fluye de manera adecuada.': q_bd,
+    'Mi jefe se comunica de forma clara y verifica que yo haya comprendido lo que me dice.': q_be,
+    'Conozco personas de diferentes áreas a la mía y se puede trabajar en un entorno agradable, de camaradería y cooperación.': q_bf,
+    'En mi área se facilita y promueve el trabajo en equipo, la integración y la colaboración entre compañeros.': q_bg,
+    'En la Organización las decisiones se toman de forma oportuna y no se aplazan decisiones importantes.': q_bh,
+    'Las decisiones que se toman en la organización se hacen con base en análisis completos y sistemáticos.': q_bi,
+    'Los líderes en la organización inspiran, motivan a los equipos y dan ejemplo con su comportamiento.': q_bj,
+    'Los jefes forman a sus colaboradores y les dan una adecuada y oportuna retroalimentación sobre su desempeño.': q_bk,
+    '¿Cómo es la cultura?': q_iq,
+    'Los jefes y directivos son cordiales y respetuosos en el trato con personas de todos los niveles en la Organización.': q_bm,
+    'Puedo dar mi punto de vista y sugerencias a la organización sabiendo que de ser posible se van a tener en cuenta.': q_bn,
+    'Siento que las relaciones en esta Organización se establecen sobre la base de la confianza en las personas.': q_bo,
+    'Puedo determinar formas propias de hacer mis labores mientras cumpla con las políticas de la Organización.': q_bp,
+    'En esta Organización el trato es justo y equitativo, sin discriminiaciones por género, edad, raza u orientación sexual.': q_bq,
+    'En esta Organización se evita que se utilice la intimidación y el hostigamiento para inducir la renuncia de algún empleado.': q_br,
+    'Yo quiero a la Organización y me siento comprometido con mi trabajo.': q_bs,
+    'Me gusta mi trabajo y siento que estoy haciendo algo de valor para la Organización.': q_bt,
+    '¿Cómo genera un ambiente sano, limpio y seguro?': q_iv,
+    'Puedo desempeñar mi trabajo de forma segura y cómoda en cuanto a temperatura, sonido, espacio e iluminación.': q_bv,
+    'Puedo manejar el estrés que se genera en mi trabajo para evitar que se afecte mi salud.': q_bw,
+    'Los procesos de la organización cuentan con controles efectivos de calidad.': q_bx,
+    'Se revisa de forma constante la calidad de los procesos y servicios en busca de un mejoramiento continuo.': q_by,
+    'Se nota una sensibilidad en la Organización por cuidar el impacto que su operación pueda generar en el medio ambiente.': q_bz,
+    'La Organización implementa políticas y/o procedimientos para que los empleados cuidemos el medio ambiente.': q_ca,
+    'La Organización contrata empleados y proveedores cumpliendo con todas los requisitos legales y pagando oportunamente.': q_cb,
+    'La Organización cuida el impacto que puede tener en la comunidad en donde opera y busca aportar a la misma.': q_cc,
     }
     df_out = pd.DataFrame([out_row], columns=CONSOLIDADO_COLS)
 
@@ -643,18 +726,22 @@ def generar():
     print(f'Hoja "{SHEET_OUT}" escrita en {final_path}')
     print('Valores:')
     converted_cols_one_decimal = {
+        # Conversión 4->10
         'Indice de clima',
         '¿Cómo es trabajar en la organización?',
+        # AL–AS
         'Me siento orgulloso(a) cuando le cuento a otros que estoy trabajando en esta Organización.',
         'Recomendaría a otros trabajar en esta Organización.',
         'Me parece inspiradora la misión de la Organización y estoy comprometido (a) con ella.',
         'Comprendo los objetivos de la Organzación y sé como puedo aportar a conseguirlos desde mi cargo.',
         'Se reciben beneficios no monetarios que hacen más agradable la experiencia en la Organización.',
         'Se realizan actividades de bienestar que brindan espacios de esparcimiento para el empleado y su familia.',
-    'Las características de mi trabajo me permiten tener un adecuado balance entre mi trabajo y mi vida personal.',
+        'Las características de mi trabajo me permiten tener un adecuado balance entre mi trabajo y mi vida personal.',
         'La empresa demuestra sensibilidad con las particularidades de la vida personal de sus empleados.',
-        '8. Por favor elija una opción de respuesta a cada afirmación. Seleccione la que mejor describa su situación.',
-        '9. Por favor elija una opción de respuesta a cada afirmación. Seleccione la que mejor describa su situación.',
+        # IG / IL
+        '¿Cómo lo soporta para lograr los resultados de su cargo?',
+        '¿Cómo es la dinámica del trabajo conjunto para lograr resultados?',
+        # AU–BB
         'Cuento con los recursos mínimos que requiero para realizar de forma adecuada mi trabajo.',
         'Puedo acceder a toda la información que necesito para hacer bien mi trabajo.',
         'Siento que mi cargo me brinda la oportunidad de progresar y desarrollarme.',
@@ -662,7 +749,37 @@ def generar():
         'La formación que brinda la Organización realmente me ayuda a realizar mejor mi trabajo.',
         'El entrenamiento que recibo en mi cargo me ayuda progresar a nivel personal y profesional.',
         'Me evalúan por mi desempeño y tengo opciones de recibir reconocimiento si he realizado un esfuerzo por hacer mi trabajo de manera sobresaliente.',
-        'En esta Organización celebramos los éxitos y nos felicitamos por los logros obtenidos.'
+        'En esta Organización celebramos los éxitos y nos felicitamos por los logros obtenidos.',
+        # BD–BK
+        'La comunicación entre áreas fluye de manera adecuada.',
+        'Mi jefe se comunica de forma clara y verifica que yo haya comprendido lo que me dice.',
+        'Conozco personas de diferentes áreas a la mía y se puede trabajar en un entorno agradable, de camaradería y cooperación.',
+        'En mi área se facilita y promueve el trabajo en equipo, la integración y la colaboración entre compañeros.',
+        'En la Organización las decisiones se toman de forma oportuna y no se aplazan decisiones importantes.',
+        'Las decisiones que se toman en la organización se hacen con base en análisis completos y sistemáticos.',
+        'Los líderes en la organización inspiran, motivan a los equipos y dan ejemplo con su comportamiento.',
+        'Los jefes forman a sus colaboradores y les dan una adecuada y oportuna retroalimentación sobre su desempeño.',
+        # IQ
+        '¿Cómo es la cultura?',
+        # BM–BT
+        'Los jefes y directivos son cordiales y respetuosos en el trato con personas de todos los niveles en la Organización.',
+        'Puedo dar mi punto de vista y sugerencias a la organización sabiendo que de ser posible se van a tener en cuenta.',
+        'Siento que las relaciones en esta Organización se establecen sobre la base de la confianza en las personas.',
+        'Puedo determinar formas propias de hacer mis labores mientras cumpla con las políticas de la Organización.',
+        'En esta Organización el trato es justo y equitativo, sin discriminiaciones por género, edad, raza u orientación sexual.',
+        'En esta Organización se evita que se utilice la intimidación y el hostigamiento para inducir la renuncia de algún empleado.',
+        'Yo quiero a la Organización y me siento comprometido con mi trabajo.',
+        'Me gusta mi trabajo y siento que estoy haciendo algo de valor para la Organización.'
+        ,
+        '¿Cómo genera un ambiente sano, limpio y seguro?',
+        'Puedo desempeñar mi trabajo de forma segura y cómoda en cuanto a temperatura, sonido, espacio e iluminación.',
+        'Puedo manejar el estrés que se genera en mi trabajo para evitar que se afecte mi salud.',
+        'Los procesos de la organización cuentan con controles efectivos de calidad.',
+        'Se revisa de forma constante la calidad de los procesos y servicios en busca de un mejoramiento continuo.',
+        'Se nota una sensibilidad en la Organización por cuidar el impacto que su operación pueda generar en el medio ambiente.',
+        'La Organización implementa políticas y/o procedimientos para que los empleados cuidemos el medio ambiente.',
+        'La Organización contrata empleados y proveedores cumpliendo con todas los requisitos legales y pagando oportunamente.',
+        'La Organización cuida el impacto que puede tener en la comunidad en donde opera y busca aportar a la misma.'
     }
     for k in CONSOLIDADO_COLS:
         v = out_row.get(k)

@@ -56,6 +56,62 @@
 			"isBackground": false,
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "Run consolidado with new Q8/Q9",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado with BD–BK",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado with IQ culture",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado with BM–BT",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Re-run consolidado after formatting fix",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado with IV question",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
+		},
+		{
+			"label": "Run consolidado with BV–CC",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }
