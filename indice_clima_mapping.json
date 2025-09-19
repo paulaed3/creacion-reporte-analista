@@ -1,0 +1,56 @@
+{
+  "rows": [
+    { "label": "Indice Clima", "kind": "group", "columns": ["ia"], "children": [
+      "1. ¿Cómo es trabajar en la organización?",
+      "2. ¿Cómo lo soporta para lograr los resultados del cargo?",
+      "3. ¿Cómo es la dinámica de trabajo conjunto para lograr los resultados?",
+      "4. ¿Cómo es la cultura?",
+      "5. ¿Cómo genera un ambiente sano, limpio y seguro?"
+    ], "groupAggregation": "unweighted" },
+
+    { "label": "1. ¿Cómo es trabajar en la organización?", "kind": "group", "columns": ["ib"], "children": [
+      "Reputación", "Direccionamiento", "Beneficios", "Balance y Equilibrio"
+    ], "groupAggregation": "unweighted" },
+    { "label": "Reputación", "kind": "value", "columns": ["ic"] },
+    { "label": "Direccionamiento", "kind": "value", "columns": ["id"] },
+    { "label": "Beneficios", "kind": "value", "columns": ["ie"] },
+    { "label": "Balance y Equilibrio", "kind": "value", "columns": ["if"] },
+
+    { "label": "2. ¿Cómo lo soporta para lograr los resultados del cargo?", "kind": "group", "columns": ["ig"], "children": [
+      "Recursos", "Cargo", "Capacitación", "Desempeño y reconocimiento"
+    ], "groupAggregation": "unweighted" },
+    { "label": "Recursos", "kind": "value", "columns": ["ih"] },
+    { "label": "Cargo", "kind": "value", "columns": ["ii"] },
+    { "label": "Capacitación", "kind": "value", "columns": ["ij"] },
+    { "label": "Desempeño y reconocimiento", "kind": "value", "columns": ["ik"] },
+
+    { "label": "3. ¿Cómo es la dinámica de trabajo conjunto para lograr los resultados?", "kind": "group", "columns": ["il"], "children": [
+      "Comunicación", "Trabajo en Equipo", "Toma de decisiones", "Mentoring"
+    ], "groupAggregation": "unweighted" },
+    { "label": "Comunicación", "kind": "value", "columns": ["im"] },
+    { "label": "Trabajo en Equipo", "kind": "value", "columns": ["in"] },
+    { "label": "Toma de decisiones", "kind": "value", "columns": ["io"] },
+    { "label": "Mentoring", "kind": "value", "columns": ["ip"] },
+
+    { "label": "4. ¿Cómo es la cultura?", "kind": "group", "columns": ["iq"], "children": [
+      "Respeto", "Tranquilidad", "Equidad", "Compromiso"
+    ], "groupAggregation": "unweighted" },
+    { "label": "Respeto", "kind": "value", "columns": ["ir"] },
+    { "label": "Tranquilidad", "kind": "value", "columns": ["is"] },
+    { "label": "Equidad", "kind": "value", "columns": ["it"] },
+    { "label": "Compromiso", "kind": "value", "columns": ["iu"] },
+
+    { "label": "5. ¿Cómo genera un ambiente sano, limpio y seguro?", "kind": "group", "columns": ["iv"], "children": [
+      "Salud y Seguridad", "Calidad", "Medio ambiente", "Responsabilidad Social"
+    ], "groupAggregation": "unweighted" },
+    { "label": "Salud y Seguridad", "kind": "value", "columns": ["iw"] },
+    { "label": "Calidad", "kind": "value", "columns": ["ix"] },
+    { "label": "Medio ambiente", "kind": "value", "columns": ["iy"] },
+    { "label": "Responsabilidad Social", "kind": "value", "columns": ["iz"] }
+  ],
+  "defaults": {
+    "sheet": "Datos A2",
+    "aggregation": "stack",
+    "groupAggregation": "unweighted"
+  }
+}

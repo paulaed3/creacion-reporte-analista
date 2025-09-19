@@ -87,6 +87,7 @@ def crear_hoja_comentarios():
     parser = argparse.ArgumentParser(description='Generar hoja "comentarios" desde "Datos A2" filtrando opcionalmente por ID(s).')
     parser.add_argument('--id', dest='ids', nargs='*', help='Uno o varios ID a filtrar. Ej: --id 12345 67890')
     parser.add_argument('--sheet', dest='sheet', help='Nombre de la hoja de entrada si no es "Datos A2".')
+    parser.add_argument('--out', dest='out', help='Archivo de salida (por defecto salida.xlsx)')
     args = parser.parse_args()
 
     ids_norm = None
@@ -189,7 +190,7 @@ def crear_hoja_comentarios():
             faltantes.append(tcol)
 
     # Escribir/actualizar archivo de salida
-    out_path = base_dir / OUTPUT_FILE
+    out_path = base_dir / (args.out or OUTPUT_FILE)
     mode = 'a' if out_path.exists() else 'w'
     writer_kwargs = dict(engine='openpyxl', mode=mode)
     if mode == 'a':

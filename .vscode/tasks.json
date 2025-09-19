@@ -112,6 +112,14 @@
 			"isBackground": false,
 			"problemMatcher": [],
 			"group": "build"
+		},
+		{
+			"label": "Run generator with Por pregunta sheet",
+			"type": "shell",
+			"command": "py -3 .\\generar_consolidado.py --universo 963",
+			"isBackground": false,
+			"problemMatcher": [],
+			"group": "build"
 		}
 	]
 }

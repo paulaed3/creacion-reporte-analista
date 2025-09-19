@@ -262,11 +262,19 @@ def get_responded_mask(df: pd.DataFrame, df_raw: pd.DataFrame, respuesta_letter:
 
 
 def count_respuestas(df: pd.DataFrame, df_raw: pd.DataFrame, respuesta_letter: str | None, base_mask: pd.Series | None) -> int:
-    # Nuevo criterio: sin filtro por ID, contar todas las filas de datos.
-    # Con filtro por ID, contar filas seleccionadas.
-    if base_mask is not None:
+    """Cuenta respuestas reales.
+    Preferir columna específica (respuesta_letter) para determinar si una fila respondió.
+    Si no se indica columna, considerar respondida si la fila tiene algún valor no vacío.
+    Siempre intersectar con base_mask cuando exista (filtro por ID).
+    """
+    # Construir máscara de respondidos según columna indicada o por contenido de la fila
+    resp_mask = get_responded_mask(df, df_raw, respuesta_letter, base_mask)
+    if resp_mask is not None and len(resp_mask) == len(df):
+        return int(resp_mask.sum())
+    # Fallback robusto
+    if base_mask is not None and len(base_mask) == len(df):
         return int(base_mask.sum())
-    return max(len(df), 0)
+    return int((~df.isna()).any(axis=1).sum())
 
 
 def pct_cohort(df: pd.DataFrame, df_raw: pd.DataFrame, gen_letter: str, cohort_key: str, base_mask: pd.Series | None) -> float:
@@ -383,6 +391,21 @@ def avg_from_letter_scale4_to10(df: pd.DataFrame, df_raw: pd.DataFrame, value_le
     return round(float(converted), 1)
 
 
+def avg_group_from_letters_scale4_to10(df: pd.DataFrame, df_raw: pd.DataFrame, letters: list[str], base_mask: pd.Series | None) -> float:
+    """Promedio no ponderado de varias letras, cada una convertida 1–4 -> 10 con la misma regla.
+    Equivale a la lógica en Power BI cuando hace promedio de subcomponentes "Actual".
+    Ignora letras sin datos (> 0.0 criterio) y redondea el promedio final a 1 decimal.
+    """
+    vals = []
+    for lt in letters:
+        v = avg_from_letter_scale4_to10(df, df_raw, lt, base_mask)
+        if v and v > 0.0:
+            vals.append(float(v))
+    if not vals:
+        return 0.0
+    return round(sum(vals) / len(vals), 1)
+
+
 def compute_nps_from_letter(df: pd.DataFrame, df_raw: pd.DataFrame, nps_letter: str, base_mask: pd.Series | None):
     """Calcula NPS = (Promotores - Detractores) / Respuestas * 100.
     Usa la columna 'Tipo NPS' indicada por letra, sin conversión de escala.
@@ -405,11 +428,16 @@ def compute_nps_from_letter(df: pd.DataFrame, df_raw: pd.DataFrame, nps_letter: 
         sel_mask = base_mask.copy()
     else:
         sel_mask = build_row_mask_all_true(len(series))
-    denom = int(sel_mask.sum())
+    # Normalizar etiquetas y descartar vacíos del NPS (mismo criterio que Respuestas)
+    s_norm = series.astype(str).apply(normalize_label)
+    empty_like = {'', 'nan', 'none', 'na', 'n/a', 'n\\a', '-', '–', '--', 's/d', 'sd'}
+    has_alnum = s_norm.str.contains(r"[0-9a-zA-Z]", regex=True, na=False)
+    non_empty = ~s_norm.isin(empty_like) & has_alnum
+    final_mask = sel_mask & non_empty
+    denom = int(final_mask.sum())
     if denom == 0:
         return 0.0, 0, 0, 0
-    # Normalizar etiquetas y contar promotores/detractores
-    s_norm = series.astype(str).apply(normalize_label)
+    # Contar promotores/detractores
     promotor_variants = {
         'entusiasta', 'entusiastas', 'promotor', 'promotores', 'promoter', 'promoters'
     }
@@ -418,8 +446,8 @@ def compute_nps_from_letter(df: pd.DataFrame, df_raw: pd.DataFrame, nps_letter: 
     }
     is_prom = s_norm.isin(promotor_variants)
     is_det = s_norm.isin(detractor_variants)
-    prom = int((is_prom & sel_mask).sum())
-    det = int((is_det & sel_mask).sum())
+    prom = int((is_prom & final_mask).sum())
+    det = int((is_det & final_mask).sum())
     nps = ((prom - det) / denom) * 100.0
     return round(float(nps), 2), prom, det, denom
 
@@ -456,12 +484,16 @@ def compute_nps_by_cohort(df: pd.DataFrame, df_raw: pd.DataFrame, nps_letter: st
     nps_series = nps_series.iloc[:n]
     cohort_mask = cohort_mask.iloc[:n]
     sel_mask = sel_mask.iloc[:n]
-    final_mask = sel_mask & cohort_mask
+    # Descartar NPS vacíos
+    s_norm = nps_series.astype(str).apply(normalize_label)
+    empty_like = {'', 'nan', 'none', 'na', 'n/a', 'n\\a', '-', '–', '--', 's/d', 'sd'}
+    has_alnum = s_norm.str.contains(r"[0-9a-zA-Z]", regex=True, na=False)
+    non_empty = ~s_norm.isin(empty_like) & has_alnum
+    final_mask = sel_mask & cohort_mask & non_empty
     denom = int(final_mask.sum())
     if denom == 0:
         return 0.0
     # Clasificación promotores/detractores
-    s_norm = nps_series.astype(str).apply(normalize_label)
     promotor_variants = {'entusiasta', 'entusiastas', 'promotor', 'promotores', 'promoter', 'promoters'}
     detractor_variants = {'detractor', 'detractores'}
     is_prom = s_norm.isin(promotor_variants)
@@ -487,10 +519,14 @@ def compute_nps_category_pct(df: pd.DataFrame, df_raw: pd.DataFrame, nps_letter:
         sel_mask = base_mask.copy()
     else:
         sel_mask = build_row_mask_all_true(len(series))
-    denom = int(sel_mask.sum())
+    s_norm = series.astype(str).apply(normalize_label)
+    empty_like = {'', 'nan', 'none', 'na', 'n/a', 'n\\a', '-', '–', '--', 's/d', 'sd'}
+    has_alnum = s_norm.str.contains(r"[0-9a-zA-Z]", regex=True, na=False)
+    non_empty = ~s_norm.isin(empty_like) & has_alnum
+    final_mask = sel_mask & non_empty
+    denom = int(final_mask.sum())
     if denom == 0:
         return 0.0
-    s_norm = series.astype(str).apply(normalize_label)
     promotor_variants = {'entusiasta', 'entusiastas', 'promotor', 'promotores', 'promoter', 'promoters'}
     detractor_variants = {'detractor', 'detractores'}
     pasivo_variants = {'pasivo', 'pasivos', 'neutral', 'neutrales', 'indiferente', 'indiferentes'}
@@ -500,7 +536,7 @@ def compute_nps_category_pct(df: pd.DataFrame, df_raw: pd.DataFrame, nps_letter:
         mask_cat = s_norm.isin(pasivo_variants)
     else:
         mask_cat = s_norm.isin(detractor_variants)
-    num = int((mask_cat & sel_mask).sum())
+    num = int((mask_cat & final_mask).sum())
     return round((num / denom) * 100.0, 2)
 
 
@@ -551,8 +587,9 @@ def generar():
             except Exception:
                 print('Valor no válido. Ingresa un número (puedes usar coma o punto).')
 
-    # 1) Respuestas
-    respuestas = count_respuestas(df, df_raw, args.respuesta_col, id_mask)
+    # 1) Respuestas: por defecto, si no se indica --respuesta-col, usar la columna de NPS
+    respuesta_letter = args.respuesta_col if args.respuesta_col else args.nps_col
+    respuestas = count_respuestas(df, df_raw, respuesta_letter, id_mask)
 
     # 2) % Participación = respuestas / universo (en porcentaje) con 2 decimales
     if universo and universo > 0:
@@ -571,8 +608,20 @@ def generar():
     # 6) Condiciones de trabajo (promedio total de columna G)
     nivel_satisfaccion_condiciones = avg_from_letter(df, df_raw, 'G', id_mask)
 
-    # 7) Indice de clima (promedio de columna IA), aplicando conversión de escala 4 -> 10
-    indice_clima = avg_from_letter_scale4_to10(df, df_raw, args.clima_col, id_mask)
+    # 7) Indice de clima (promedio no ponderado de los 5 ejes principales, conversión 4->10)
+    # Ejes como promedio de subcomponentes según fórmulas de Power BI:
+    # 1. Trabajar en la organización (IB) = promedio(IC, ID, IE, IF)
+    # 2. Soporte para resultados del cargo (IG) = promedio(IH, II, IJ, IK)
+    # 3. Dinámica de trabajo conjunto (IL) = promedio(IM, IN, IO, IP)
+    # 4. Cultura (IQ) = promedio(IR, IS, IT, IU)
+    # 5. Ambiente sano, limpio y seguro (IV) = promedio(IW, IX, IY, IZ)
+    trabajar_org = avg_group_from_letters_scale4_to10(df, df_raw, ['IC', 'ID', 'IE', 'IF'], id_mask)
+    q_ig = avg_group_from_letters_scale4_to10(df, df_raw, ['IH', 'II', 'IJ', 'IK'], id_mask)
+    q_il = avg_group_from_letters_scale4_to10(df, df_raw, ['IM', 'IN', 'IO', 'IP'], id_mask)
+    q_iq = avg_group_from_letters_scale4_to10(df, df_raw, ['IR', 'IS', 'IT', 'IU'], id_mask)
+    q_iv = avg_group_from_letters_scale4_to10(df, df_raw, ['IW', 'IX', 'IY', 'IZ'], id_mask)
+    indice_clima = round(sum([v for v in [trabajar_org, q_ig, q_il, q_iq, q_iv] if v and v > 0.0]) /
+                         max(1, len([v for v in [trabajar_org, q_ig, q_il, q_iq, q_iv] if v and v > 0.0])), 1)
 
     # 8) NPS (con categorías en columna Tipo NPS)
     nps, nps_prom, nps_det, nps_denom = compute_nps_from_letter(df, df_raw, args.nps_col, id_mask)
@@ -586,9 +635,6 @@ def generar():
     nps_pct_pas = compute_nps_category_pct(df, df_raw, args.nps_col, 'pasivo', id_mask)
     nps_pct_det = compute_nps_category_pct(df, df_raw, args.nps_col, 'detractor', id_mask)
 
-    # 11) ¿Cómo es trabajar en la organización? (promedio columna IB con conversión 4->10)
-    trabajar_org = avg_from_letter_scale4_to10(df, df_raw, 'IB', id_mask)
-
     # 12-19) Ocho preguntas AL..AS con conversión 4->10
     q_al = avg_from_letter_scale4_to10(df, df_raw, 'AL', id_mask)
     q_am = avg_from_letter_scale4_to10(df, df_raw, 'AM', id_mask)
@@ -598,10 +644,7 @@ def generar():
     q_aq = avg_from_letter_scale4_to10(df, df_raw, 'AQ', id_mask)
     q_ar = avg_from_letter_scale4_to10(df, df_raw, 'AR', id_mask)
     q_as = avg_from_letter_scale4_to10(df, df_raw, 'AS', id_mask)
-    # 20) Pregunta IG
-    q_ig = avg_from_letter_scale4_to10(df, df_raw, 'IG', id_mask)
-    # 21) Pregunta IL (Q9) con conversión 4->10
-    q_il = avg_from_letter_scale4_to10(df, df_raw, 'IL', id_mask)
+    # (Se omiten asignaciones individuales de IG/IL porque ya fueron calculados como promedios de sus subcomponentes)
     # 21-28) Preguntas AU..BB con conversión 4->10
     q_au = avg_from_letter_scale4_to10(df, df_raw, 'AU', id_mask)
     q_av = avg_from_letter_scale4_to10(df, df_raw, 'AV', id_mask)
@@ -620,8 +663,7 @@ def generar():
     q_bi = avg_from_letter_scale4_to10(df, df_raw, 'BI', id_mask)
     q_bj = avg_from_letter_scale4_to10(df, df_raw, 'BJ', id_mask)
     q_bk = avg_from_letter_scale4_to10(df, df_raw, 'BK', id_mask)
-    # 37) ¿Cómo es la cultura? (columna IQ) con conversión 4->10
-    q_iq = avg_from_letter_scale4_to10(df, df_raw, 'IQ', id_mask)
+    # (Se omite la asignación individual de IQ; usamos el promedio de IR, IS, IT, IU)
     # 38-45) Preguntas BM..BT con conversión 4->10
     q_bm = avg_from_letter_scale4_to10(df, df_raw, 'BM', id_mask)
     q_bn = avg_from_letter_scale4_to10(df, df_raw, 'BN', id_mask)
@@ -631,8 +673,7 @@ def generar():
     q_br = avg_from_letter_scale4_to10(df, df_raw, 'BR', id_mask)
     q_bs = avg_from_letter_scale4_to10(df, df_raw, 'BS', id_mask)
     q_bt = avg_from_letter_scale4_to10(df, df_raw, 'BT', id_mask)
-    # 46) ¿Cómo genera un ambiente sano, limpio y seguro? (columna IV) con conversión 4->10
-    q_iv = avg_from_letter_scale4_to10(df, df_raw, 'IV', id_mask)
+    # (Se omite la asignación individual de IV; usamos el promedio de IW, IX, IY, IZ)
     # 47-54) Preguntas BV..CC con conversión 4->10
     q_bv = avg_from_letter_scale4_to10(df, df_raw, 'BV', id_mask)
     q_bw = avg_from_letter_scale4_to10(df, df_raw, 'BW', id_mask)

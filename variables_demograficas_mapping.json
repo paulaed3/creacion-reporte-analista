@@ -1,0 +1,149 @@
+{
+  "defaults": {
+    "sheet": "Datos A2",
+    "npsColumn": "GV",
+    "idColumn": "A"
+  },
+  "groups": [
+    {
+      "group": "GENERO",
+      "column": "CD",
+      "order": ["0 Femenino", "1 Masculino", "2 Otro"],
+      "normalize": {
+        "femenino": "0 Femenino",
+        "masculino": "1 Masculino",
+        "otro": "2 Otro"
+      }
+    },
+    {
+      "group": "ESTADO CIVIL",
+      "column": "CE",
+      "order": [
+        "0 Casado (a)",
+        "1 Separado (a) / Divorciado (a)",
+        "2 Soltero (a)",
+        "3 Unión Libre",
+        "4 Viudo (a)"
+      ],
+      "normalize": {
+        "casado (a)": "0 Casado (a)",
+        "separado (a) / divorciado (a)": "1 Separado (a) / Divorciado (a)",
+        "soltero (a)": "2 Soltero (a)",
+        "union libre": "3 Unión Libre",
+        "unión libre": "3 Unión Libre",
+        "viudo (a)": "4 Viudo (a)"
+      }
+    },
+    {
+      "group": "NIVEL ESTUDIOS",
+      "column": "CG",
+      "order": [
+        "0 Doctorado",
+        "1 Especialización / Maestria",
+        "2 Estudiante técnico / tecnólogo",
+        "3 Estudiante universitario",
+        "4 Primaria",
+        "5 Profesional",
+        "6 Secundaria",
+        "7 Técnico / tecnólogo"
+      ],
+      "normalize": {
+        "doctorado": "0 Doctorado",
+        "especializacion / maestria": "1 Especialización / Maestria",
+        "estudiante tecnico / tecnologo": "2 Estudiante técnico / tecnólogo",
+        "estudiante universitario": "3 Estudiante universitario",
+        "primaria": "4 Primaria",
+        "profesional": "5 Profesional",
+        "secundaria": "6 Secundaria",
+        "tecnico / tecnologo": "7 Técnico / tecnólogo"
+      }
+    },
+    {
+      "group": "TIPO VIVIENDA",
+      "column": "CH",
+      "order": ["0 Arrendada", "1 Propia"],
+      "normalize": {
+        "arrendada": "0 Arrendada",
+        "propia": "1 Propia"
+      }
+    },
+    {
+      "group": "NUMERO HIJOS",
+      "column": "?",
+      "order": ["0", "1", "2", "3", "4", "5 o más"]
+    },
+    {
+      "group": "REDUCCION INGRESOS",
+      "column": "?",
+      "order": ["0 No", "1 Sí"]
+    },
+    {
+      "group": "ANTIGUEDAD",
+      "column": "CI",
+      "order": [
+        "0 Menos de 1 año",
+        "1 Entre 1 y 5 años",
+        "2 Entre 11 y 20 años",
+        "3 Entre 6 y 10 años",
+        "4 Más de 20 años",
+        "5 No reporta"
+      ],
+      "normalize": {
+        "menos de 1 ano": "0 Menos de 1 año",
+        "entre 1 y 5 anos": "1 Entre 1 y 5 años",
+        "entre 11 y 20 anos": "2 Entre 11 y 20 años",
+        "entre 6 y 10 anos": "3 Entre 6 y 10 años",
+        "mas de 20 anos": "4 Más de 20 años",
+        "no reporta": "5 No reporta"
+      }
+    },
+    {
+      "group": "TIPO CONTRATO",
+      "column": "CJ",
+      "order": []
+    },
+    {
+      "group": "Generación",
+      "column": "GU",
+      "normalize": {
+        "baby boomers": "0 Baby Boomers",
+        "boomers": "0 Baby Boomers",
+        "generación x": "1 Generación X",
+        "generacion x": "1 Generación X",
+        "x": "1 Generación X",
+        "millennials": "3 Milenials",
+        "millenials": "3 Milenials",
+        "milenials": "3 Milenials",
+        "milenialls": "3 Milenials",
+        "centennials": "2 Centenials",
+        "centenialls": "2 Centenials"
+      },
+      "order": [
+        "0 Baby Boomers",
+        "1 Generación X",
+        "2 Centenials",
+        "3 Milenials"
+      ]
+    },
+    {
+      "group": "MODALIDAD TRABAJO",
+      "column": "?",
+      "order": ["0 N/A", "1 Presencial", "2 Remoto", "3 Híbrido"]
+    },
+    {
+      "group": "VARIABLE1",
+      "column": "CM",
+      "order": ["0 ADMINISTRATIVA", "1 DIRECCION GENERAL", "2 DOCENCIA E INVESTIGACION CIENTIFICA", "3 FINANZAS"]
+    },
+    {
+      "group": "VARIABLE2",
+      "column": "CL",
+      "order": []
+    },
+    {
+      "group": "VARIABLE3",
+      "column": "GS",
+      "order": []
+    }
+  ]
+}
